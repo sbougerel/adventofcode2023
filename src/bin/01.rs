@@ -18,10 +18,9 @@ pub fn part_two(input: &str) -> Option<u32> {
     input
         .lines()
         .map(|line| {
-            // Clearly, not the most efficient way to do this, a better approach
-            // might have been use the leading character to determine which word
-            // to check, and advance the slice by 1 or by the len of word found.
-            // This was only efficent to type.
+            // Clearly, not the most efficient way to do this, I could have used
+            // the leading character to determine which word to check, and split
+            // the slice after a match.  This was efficent to type.
             let tok2u32 = [
                 ("0", 0u32),
                 ("1", 1),
