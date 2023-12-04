@@ -4,6 +4,8 @@
 
 My solutions for [Advent of Code 2023](https://adventofcode.com/) in [Rust](https://www.rust-lang.org/).
 
+[![Continuous Integration](https://github.com/sbougerel/adventofcode2023/actions/workflows/ci.yml/badge.svg)](https://github.com/sbougerel/adventofcode2023/actions/workflows/ci.yml)
+
 <!--- advent_readme_stars table --->
 ## 2023 Results
 
