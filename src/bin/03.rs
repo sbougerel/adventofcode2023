@@ -40,53 +40,37 @@ pub fn part_two(input: &str) -> Option<u32> {
     let part_re = Regex::new(r"\d+").unwrap();
     let gear_re = Regex::new(r"\*").unwrap();
     // Map of gear (x, y) to times they've been used and values
-    let mut gear_map: HashMap<(u32, u32), (u32, u32)> = HashMap::new();
+    let mut gear_map: HashMap<(isize, isize), (u32, u32)> = HashMap::new();
     for (row, content) in schematic.iter().enumerate() {
         for gear in gear_re.find_iter(content) {
-            gear_map.insert((row as u32, gear.start() as u32), (0, 0));
+            gear_map.insert((row as isize, gear.start() as isize), (0, 0));
         }
     }
     let mut sum = 0;
-    let update_sum = |sum: &mut u32, times: &mut u32, value: &mut u32, part: &str| {
-        *times += 1;
-        // Gear should only be used twice, not more
-        if *times == 1 {
-            *value = part.parse::<u32>().unwrap();
-        }
-        if *times == 2 {
-            *sum += *value * part.parse::<u32>().unwrap();
-        }
-        if *times == 3 {
-            *sum -= *value * part.parse::<u32>().unwrap();
+    let mut update_sum = |sum: &mut u32, part: &str, row: isize, col: isize| {
+        if let Some((times, value)) = gear_map.get_mut(&(row, col)) {
+            *times += 1;
+            // Gear should only be used twice, not more
+            match *times {
+                1 => *value = part.parse::<u32>().unwrap(),
+                2 => *sum += *value * part.parse::<u32>().unwrap(),
+                3 => *sum -= *value * part.parse::<u32>().unwrap(),
+                _ => return,
+            }
         }
     };
     for (row, content) in schematic.iter().enumerate() {
+        let row = row as isize;
         for part in part_re.find_iter(content) {
+            let start = part.start() as isize;
+            let end = part.end() as isize;
             // Check for gears around part
-            for col in max(part.start(), 1) - 1..min(part.end() + 1, content.len()) {
-                if row > 0 {
-                    if let Some((times, value)) = gear_map.get_mut(&(row as u32 - 1, col as u32)) {
-                        update_sum(&mut sum, times, value, part.as_str());
-                    }
-                }
-                if row < schematic.len() - 1 {
-                    if let Some((times, value)) = gear_map.get_mut(&(row as u32 + 1, col as u32)) {
-                        update_sum(&mut sum, times, value, part.as_str());
-                    }
-                }
+            for col in start - 1..end + 1 {
+                update_sum(&mut sum, part.as_str(), row - 1, col);
+                update_sum(&mut sum, part.as_str(), row + 1, col);
             }
-            if part.start() > 0 {
-                if let Some((times, value)) =
-                    gear_map.get_mut(&(row as u32, part.start() as u32 - 1))
-                {
-                    update_sum(&mut sum, times, value, part.as_str());
-                }
-            }
-            if part.end() < content.len() {
-                if let Some((times, value)) = gear_map.get_mut(&(row as u32, part.end() as u32)) {
-                    update_sum(&mut sum, times, value, part.as_str());
-                }
-            }
+            update_sum(&mut sum, part.as_str(), row, start - 1);
+            update_sum(&mut sum, part.as_str(), row, end);
         }
     }
     Some(sum)
