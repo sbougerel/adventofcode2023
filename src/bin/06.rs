@@ -38,9 +38,8 @@ pub fn part_two(input: &str) -> Option<u64> {
     //         sum += 1;
     //     }
     // }
-    // And after, only, investigated and used the quadratic forumla:
+    // And after, only, thought to use the quadratic forumla:
     // j * (time - j) > dist
-    // j * time - j^2 > dist
     // j^2 - time * j + dist < 0
     // The values of j for which == 0 are the bounds:
     // j = (time +- sqrt(time^2 - 4 * dist)) / 2
@@ -48,7 +47,7 @@ pub fn part_two(input: &str) -> Option<u64> {
         (time as f64 - ((time as f64).powi(2) - 4.0 * dist as f64).sqrt() / 2.0).ceil() as u64;
     let j_hi =
         (time as f64 + ((time as f64).powi(2) - 4.0 * dist as f64).sqrt() / 2.0).ceil() as u64;
-    // The crazy part is that the brute force version is only 500 times slower,
+    // The crazy part is that the brute force version is only 500 times slower (in release mode),
     // so I guess computing those square roots is expensive.
     Some(j_hi - j_lo)
 }
