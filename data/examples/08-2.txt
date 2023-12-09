@@ -1,0 +1,10 @@
+LR
+
+ZZA = (ZZB, XXX)
+ZZB = (XXX, ZZZ)
+ZZZ = (ZZB, XXX)
+AAA = (AAB, XXX)
+AAB = (AAC, AAC)
+AAC = (AAZ, AAZ)
+AAZ = (AAB, AAB)
+XXX = (XXX, XXX)
