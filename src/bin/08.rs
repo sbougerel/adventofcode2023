@@ -53,7 +53,7 @@ pub fn part_two(input: &str) -> Option<u64> {
     let mut periods_start = vec![0; pos.len()];
     let mut count = 0;
     let mut stop = false;
-    while !stop && pos.iter().filter(|k| k.ends_with("Z")).count() != pos.len() {
+    while !stop {
         for (i, p) in pos.iter_mut().enumerate() {
             let index = vertices[*p];
             match instructions[count % instructions.len()] {
@@ -75,16 +75,10 @@ pub fn part_two(input: &str) -> Option<u64> {
         }
         count += 1;
     }
-    if stop {
-        // ended by computing all periods
-        periods
-            .iter()
-            .fold(1_u64, |acc: u64, e| lcm(acc, *e as u64))
-            .into()
-    } else {
-        // ended by finding a position
-        Some(count as u64)
-    }
+    periods
+        .iter()
+        .fold(1_u64, |acc: u64, e| lcm(acc, *e as u64))
+        .into()
 }
 
 #[cfg(test)]
