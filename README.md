@@ -34,6 +34,7 @@ My solutions for [Advent of Code 2023](https://adventofcode.com/) in [Rust](http
 | [Day 21](https://adventofcode.com/2023/day/21) | ⭐ | ⭐ |
 | [Day 22](https://adventofcode.com/2023/day/22) | ⭐ | ⭐ |
 | [Day 23](https://adventofcode.com/2023/day/23) | ⭐ | ⭐ |
+| [Day 24](https://adventofcode.com/2023/day/24) | ⭐ | ⭐ |
 <!--- advent_readme_stars table --->
 
 <!--- benchmarking table --->
